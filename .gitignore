@@ -1,0 +1,89 @@
+# ===========================
+# Maven
+# ===========================
+backendSpringAi/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# ===========================
+# IntelliJ IDEA
+# ===========================
+.idea/
+*.iml
+out/
+
+# ===========================
+# Eclipse
+# ===========================
+.classpath
+.project
+.settings/
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/
+
+# ===========================
+# NetBeans
+# ===========================
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+
+# ===========================
+# OS Generated Files
+# ===========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# Java
+# ===========================
+*.class
+*.jar
+*.war
+*.ear
+
+# Keep Maven Wrapper JAR
+!/.mvn/wrapper/maven-wrapper.jar
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.*
+!.env.example
+
+# ===========================
+# Spring Boot
+# ===========================
+spring.log
+
+# ===========================
+# Application Secrets
+# ===========================
+application-local.properties
+application-secret.properties
+application-dev.properties
+
+# ===========================
+# Temporary Files
+# ===========================
+*.tmp
+*.swp
+*.bak
+
+# ===========================
+# Generated Reports
+# ===========================
+dependency-reduced-pom.xml
