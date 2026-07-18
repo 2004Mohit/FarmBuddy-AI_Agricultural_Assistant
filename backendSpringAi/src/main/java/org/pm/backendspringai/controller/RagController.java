@@ -16,8 +16,8 @@ public class RagController {
         this.ragService = ragService;
     }
 
-    @GetMapping("/documents")
+    @GetMapping("/chunks")
     public List<Document> documents() {
-        return ragService.readPdf();
+        return ragService.splitPdf();
     }
 }
