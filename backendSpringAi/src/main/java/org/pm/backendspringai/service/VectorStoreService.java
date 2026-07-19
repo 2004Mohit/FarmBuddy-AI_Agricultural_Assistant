@@ -1,6 +1,7 @@
 package org.pm.backendspringai.service;
 
 import org.springframework.ai.document.Document;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,14 @@ public class VectorStoreService {
 
     public void saveDocuments(List<Document> documents) {
         vectorStore.add(documents);
+    }
+
+    public List<Document> search(String query) {
+        return vectorStore.similaritySearch(
+                SearchRequest.builder()
+                        .query(query)
+                        .topK(3)
+                        .build()
+        );
     }
 }
