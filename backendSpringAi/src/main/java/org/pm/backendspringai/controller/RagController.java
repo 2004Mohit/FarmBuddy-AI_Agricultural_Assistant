@@ -1,6 +1,6 @@
 package org.pm.backendspringai.controller;
 
-import org.pm.backendspringai.service.RagService;
+import org.pm.backendspringai.rag.RagService;
 import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package org.pm.backendspringai.service;
+package org.pm.backendspringai.rag;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
@@ -13,7 +13,7 @@ public class RagService {
 
     public List<Document> splitPdf() {
         PagePdfDocumentReader reader = new PagePdfDocumentReader(
-                new ClassPathResource("documents/2025_Arch_CutOff.pdf")
+                new ClassPathResource("documents/SQL_Complete_Notes.pdf")
         );
 
         List<Document> documents = reader.read();
