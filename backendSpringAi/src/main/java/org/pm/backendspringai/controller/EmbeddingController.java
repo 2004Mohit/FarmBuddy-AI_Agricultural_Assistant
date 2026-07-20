@@ -21,16 +21,16 @@ public class EmbeddingController {
         this.embeddingService = embeddingService;
     }
 
-    @GetMapping("/embedding")
-    public String embedding() {
-
-        List<Document> chunks = ragService.splitPdf();
-
-        EmbeddingResponse response =
-                embeddingService.generateEmbedding(chunks.getFirst());
-
-        return "Generated " +
-                response.getResults().size() +
-                " embedding(s)";
-    }
+//    @GetMapping("/embedding")
+//    public String embedding() {
+//
+//        List<Document> chunks = ragService.splitPdf();
+//
+//        EmbeddingResponse response =
+//                embeddingService.generateEmbedding(chunks.getFirst());
+//
+//        return "Generated " +
+//                response.getResults().size() +
+//                " embedding(s)";
+//    }
 }

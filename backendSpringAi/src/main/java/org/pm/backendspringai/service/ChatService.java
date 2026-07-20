@@ -4,6 +4,7 @@ import org.pm.backendspringai.dto.ChatRequest;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -12,12 +13,8 @@ public class ChatService {
 
     private final ChatClient chatClient;
 
-    public ChatService(ChatClient.Builder builder, ChatMemory chatMemory) {
-        this.chatClient = builder
-                .defaultAdvisors(
-                        MessageChatMemoryAdvisor.builder(chatMemory).build()
-                )
-                .build();
+    public ChatService(@Qualifier("chatClient") ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     public String askAi(ChatRequest chatRequest) {

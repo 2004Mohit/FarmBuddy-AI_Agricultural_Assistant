@@ -1,34 +1,76 @@
 package org.pm.backendspringai.rag;
 
+import org.pm.backendspringai.dto.RagRequest;
+import org.pm.backendspringai.dto.RagResponse;
+import org.pm.backendspringai.service.VectorStoreService;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RagService {
 
-    @Value("${rag.pdf.path}")
-    private String pdfPath;
+    private final ChatClient chatClient;
+    private final VectorStoreService vectorStoreService;
 
-    public List<Document> splitPdf() {
-        PagePdfDocumentReader reader = new PagePdfDocumentReader(
-                new ClassPathResource(pdfPath)
-        );
+    public RagService(@Qualifier("ragChatClient") ChatClient chatClient, VectorStoreService vectorStoreService) {
+        this.chatClient = chatClient;
+        this.vectorStoreService = vectorStoreService;
+    }
 
-        List<Document> documents = reader.read();
+    public RagResponse ask(RagRequest request) {
 
-        TokenTextSplitter splitter = TokenTextSplitter.builder().build();
+        List<Document> documents = vectorStoreService.search(request.question());
 
-        List<Document> chunks = splitter.apply(documents);
+        System.out.println("Retrieved Documents: " + documents.size());
 
-        System.out.println("Original Documents: " + documents.size());
-        System.out.println("Chunks: " + chunks.size());
+        documents.forEach(doc -> {
+            System.out.println("--------------------------------");
+            System.out.println(doc.getText());
+        });
 
-        return chunks;
+        String context = documents.stream()
+                .map(Document::getText)
+                .collect(Collectors.joining("\n\n-----------------------\n\n"));
+
+//        Java text block (""")
+        String prompt = """
+            You are an expert SQL tutor.
+            
+            Use ONLY the context below to answer the user's question.
+            
+            If the answer is partially available in the context, summarize it clearly.
+            
+            Do NOT use outside knowledge.
+            
+            If the answer truly does not exist in the context, say:
+            "I couldn't find that information in the provided documents."
+            
+            ========================
+            CONTEXT
+            ========================
+            
+            %s
+            
+            ========================
+            QUESTION
+            ========================
+            
+            %s
+            
+            ========================
+            ANSWER
+            ========================
+            """.formatted(context, request.question());
+
+        String answer = chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+
+        return new RagResponse(answer);
     }
 }
