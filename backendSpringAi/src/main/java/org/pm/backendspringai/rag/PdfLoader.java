@@ -1,6 +1,6 @@
 package org.pm.backendspringai.rag;
 
-import org.pm.backendspringai.repo.VectorStoreRepository;
+import org.pm.backendspringai.repository.VectorStoreRepository;
 import org.pm.backendspringai.service.VectorStoreService;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;

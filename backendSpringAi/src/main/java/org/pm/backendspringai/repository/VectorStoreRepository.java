@@ -1,4 +1,4 @@
-package org.pm.backendspringai.repo;
+package org.pm.backendspringai.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
